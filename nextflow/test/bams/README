@@ -1,0 +1,26 @@
+wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/10XGenomics/NA24385_phased_possorted_bam.bam
+wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/10XGenomics/NA24385_phased_possorted_bam.bam.bai
+
+wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/NIST_Illumina_2x250bps/novoalign_bams/HG002.GRCh38.2x250.bam
+wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/AshkenazimTrio/HG002_NA24385_son/NIST_Illumina_2x250bps/novoalign_bams/HG002.GRCh38.2x250.bam.baixy
+
+wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/NIST_NA12878_HG001_HiSeq_300x/RMNISTHS_30xdownsample.bam
+wget https://ftp-trace.ncbi.nlm.nih.gov/ReferenceSamples/giab/data/NA12878/NIST_NA12878_HG001_HiSeq_300x/RMNISTHS_30xdownsample.bam.bai
+
+ml BEDTools/2.30.0-GCCcore-11.3.0
+ml BCFtools/1.19-GCCcore-11.3.0
+
+#../VCF/DNA-001.GRCh37.FINAL.vcf.gz
+#../VCF/DNA-001.GRCh38.FINAL.vcf.gz
+
+zcat ../VCF/DNA-001.GRCh37.FINAL.vcf.gz | awk '! /\#/' | awk '{if(length($4) > length($5)) print $1"\t"($2-1)"\t"($2+length($4)-1); else print $1"\t"($2-1)"\t"($2+length($5)-1)}' > regions.GRCh37.bed
+zcat ../VCF/DNA-001.GRCh38.FINAL.vcf.gz | awk '! /\#/' | awk '{if(length($4) > length($5)) print $1"\t"($2-1)"\t"($2+length($4)-1); else print $1"\t"($2-1)"\t"($2+length($5)-1)}' > regions.GRCh38.bed
+
+zcat ../VCF/DNA-001.GRCh37.FINAL.vcf.gz | awk '! /\#/' | awk '{if(length($4) > length($5)) print $1"\t"($2-1)"\t"($2+length($4)-1); else print $1"\t"($2-5)"\t"($2+length($5)+4)}' > regions.GRCh37.bed
+zcat ../VCF/DNA-001.GRCh38.FINAL.vcf.gz | awk '! /\#/' | awk '{if(length($4) > length($5)) print $1"\t"($2-1)"\t"($2+length($4)-1); else print $1"\t"($2-5)"\t"($2+length($5)+4)}' > regions.GRCh38.bed
+
+bedtools intersect -a NA24385_phased_possorted_bam.bam -b regions.GRCh37.bed > NA24385_phased_possorted.sliced.bam
+bedtools intersect -a NA24385_phased_possorted_bam.bam -b regions.GRCh37.bed > NA24385_phased_possorted.sliced.bam
+
+
+samtools view -C -T reference/hs37d5.fa -o RMNISTHS_30xdownsample.GRCh37.cram RMNISTHS_30xdownsample.GRCh37.bam
