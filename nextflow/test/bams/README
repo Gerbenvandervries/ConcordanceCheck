@@ -24,3 +24,24 @@ bedtools intersect -a NA24385_phased_possorted_bam.bam -b regions.GRCh37.bed > N
 
 
 samtools view -C -T reference/hs37d5.fa -o RMNISTHS_30xdownsample.GRCh37.cram RMNISTHS_30xdownsample.GRCh37.bam
+
+
+# sample creation: NA12878.GRCh38 / NA24385..GRCh38
+/groups/umcg-gst/tmp07/Analysis_dragen4.3.13/105856-047-HG001/105856-047-HG001.ba*
+bedtools intersect -a 105856-047-HG001.bam -b /apps/data/UMCG/concordanceCheckSnps_GRCh38.bed > 105856-047-HG001.sliced.bam
+samtools view -H 105856-047-HG001.sliced.bam > 105856-047-HG001.sliced.reheader.sam
+perl -pi -e 's|105856-047-HG001|NA12878.GRCh38|g' 
+samtools reheader 105856-047-HG001.sliced.reheader.sam 105856-047-HG001.sliced.bam > NA12878.GRCh38.bam
+
+ml io_lib
+ml SAMtools
+
+#bam to cram
+scramble \
+-I bam \
+-O cram \
+-r /apps/data/GRC/GRCh38/GRCh38_full_analysis_set_plus_decoy_hla.fa \
+-P \
+-m \
+-t 6 \
+NA12878.GRCh38.bam NA12878.GRCh38.cram

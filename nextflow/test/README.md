@@ -44,7 +44,7 @@
 | 100019 | vcf         | DNA-003.GRCh37 | cram        | NA24385.GRCh38     | DNA → DNA | 37 vs 38  | cross-build/same-platform |
 | 100020 | vcf         | DNA-004.GRCh38 | bam         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform |
 | 100021 | vcf         | DNA-004.GRCh38 | cram        | NA24385.GRCh38     | DNA → DNA | same (38) | same-build/same-platform  |
-| 100028 | bam         | NA12878.GRCh37 x | vcf         | DNA-005.GRCh37     | DNA → DNA | same (37) | same-build/same-platform swap | x
+| 100028 | bam         | NA12878.GRCh37 | vcf         | DNA-005.GRCh37     | DNA → DNA | same (37) | same-build/same-platform swap | x
 | 100029 | bam         | NA12878.Hs38d1 | vcf         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | todo: buildminmatch chr.  |
 | 100030 | bam         | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | todo: cross-build/same-platform swap | x / nieuw gemaakt
 | 100031 | cram        | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | todo: cross-build/same-platform swap | x / nieuw gemaakt
@@ -65,13 +65,14 @@
 ## DNA → OPAR
 | TEST ID| InputType A | Sample A       | InputType B | Sample B        | Datatypes  | Build mix | Testtype                   |
 | ------ | ----------- | -------------- | ----------- | --------------- | ---------- | --------- | -------------------------- |
-| 100012 | vcf         | DNA-005.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform  |
-| 100013 | vcf         | DNA-005.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
-| 100026 | bam         | DNA-004.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform  |
-| 100027 | cram        | NA12878.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
-| 100033 | bam         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
-| 100034 | vcf         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform | x
-| 100048 | cram        | NA12878.GRCh37 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform | x
+| 100012 | vcf         | DNA-005.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform  swap |
+| 100013 | vcf         | DNA-005.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform swap |
+| 100033 | vcf         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
+| 100034 | vcf         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | cross-build/cross-platform |
+| 100035 | bam         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform  |
+| 100036 | bam         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | same-build/cross-platform  |
+| 100037 | cram        | NA12878.GRCh37 | txt         | OPAR-002.GRCh37 | DNA → OPAR | same (37) | cross-build/cross-platform |
+| 100038 | cram        | NA12878.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
 
 ## PGX → OPAR
 | TEST ID| InputType A | Sample A       | InputType B | Sample B        | Datatypes  | Build mix | Testtype        |
