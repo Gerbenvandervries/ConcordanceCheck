@@ -48,7 +48,8 @@
 | 100029 | bam         | NA12878.Hs38d1 | vcf         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | todo: buildminmatch chr.  | x
 | 100030 | bam         | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform swap |
 | 100031 | cram        | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform swap |
-| 100032 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | same-build/same-platform  |
+| 100032 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | same-build/same-platform   | x
+| 100039 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | todo: bug: name conflixt  |
 
 ## RNA -> RNA
 | TEST ID| InputType A | Sample A       | InputType B | Sample B       | Datatypes | Build mix | Testtype                  |
