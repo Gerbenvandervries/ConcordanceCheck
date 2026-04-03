@@ -56,3 +56,15 @@ do
 	bgzip -c HG002_GRCh38_1_22_v4.1_draft_benchmark.head1k.reader.vcf > "RNA-00${i}.GRCh38.FINAL.vcf.gz"
         tabix -p vcf "RNA-00${i}.GRCh38.FINAL.vcf.gz"
 done
+
+	# NA12878.GRCh38 and NA12878.GRCh37
+	echo "NA12878.GRCh38" > file.txt
+	bcftools reheader -s file.txt -o NA12878.GRCh38.vcf 105856-047-HG001.hard-filtered.vcf.gz
+	bcftools sort NA12878.GRCh38.vcf -o NA12878.GRCh38.sorted.vcf
+	bgzip -c NA12878.GRCh38.sorted.vcf > "NA12878.GRCh38.sorted.vcf.gz"
+	bedtools intersect -a NA12878.GRCh38.sorted.vcf.gz -b /apps/data/UMCG/concordanceCheckSnps_GRCh38.bed > NA12878.GRCh38.sorted.intersect.txt
+	grep '#' NA12878.GRCh38.sorted.vcf > NA12878.GRCh38.sorted.header
+	cat NA12878.GRCh38.sorted.header NA12878.GRCh38.sorted.intersect.txt > NA12878.GRCh38.sorted.vcf
+	bgzip -c NA12878.GRCh38.sorted.vcf > "NA12878.GRCh38.sorted.vcf.gz"
+	tabix -p vcf "NA12878.GRCh38.sorted.vcf.gz"
+
