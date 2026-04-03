@@ -18,8 +18,8 @@
 | 100003 | vcf         | DNA-002.GRCh38 | vcf         | RNA-009.GRCh38 | DNA → RNA | same (38) | same-build/cross-platform  |
 | 100014 | vcf         | DNA-001.GRCh37 | bam         | RNA-008.GRCh37 | DNA → RNA | same (37) | same-build/cross-platform  |
 | 100015 | vcf         | DNA-001.GRCh38 | cram        | RNA-008.GRCh37 | DNA → RNA | 38 vs 37  | cross-build/cross-platform |
-| 100016 | vcf         | DNA-002.GRCh37 | bam         | RNA-009.GRCh38 | DNA → RNA | 37 vs 38  | todo.                      |
-| 100017 | vcf         | DNA-002.GRCh38 | cram        | RNA-009.GRCh38 | DNA → RNA | same (38) | todo.                      |
+| 100016 | vcf         | DNA-002.GRCh37 | bam         | RNA-009.GRCh38 | DNA → RNA | 37 vs 38  | todo.                      | x
+| 100017 | vcf         | DNA-002.GRCh38 | cram        | RNA-009.GRCh38 | DNA → RNA | same (38) | todo.                      | x
 |        | vcf         | NA12878.GRCh37 | bam         | RNA-008.GRCh37 | DNA → RNA | same (37) | todo. same-build/cross-platform  | x
 |        | vcf         | NA12878.GRCh37 | cram        | RNA-008.GRCh37 | DNA → RNA | same (37) | todo. same-build/cross-platform  | x
 |        | bam         | NA12878.GRCh37 | bam         | RNA-008.GRCh37 | DNA → RNA | same (37) | todo. same-build/cross-platform  | x
@@ -44,11 +44,11 @@
 | 100019 | vcf         | DNA-003.GRCh37 | cram        | NA24385.GRCh38     | DNA → DNA | 37 vs 38  | cross-build/same-platform |
 | 100020 | vcf         | DNA-004.GRCh38 | bam         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform |
 | 100021 | vcf         | DNA-004.GRCh38 | cram        | NA24385.GRCh38     | DNA → DNA | same (38) | same-build/same-platform  |
-| 100028 | bam         | NA12878.GRCh37 | vcf         | DNA-005.GRCh37     | DNA → DNA | same (37) | same-build/same-platform swap | x
-| 100029 | bam         | NA12878.Hs38d1 | vcf         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | todo: buildminmatch chr.  |
-| 100030 | bam         | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | todo: cross-build/same-platform swap | x / nieuw gemaakt
-| 100031 | cram        | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | todo: cross-build/same-platform swap | x / nieuw gemaakt
-| 100032 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | same-build/same-platform  | x
+| 100028 | bam         | NA12878.GRCh37 | vcf         | DNA-005.GRCh37     | DNA → DNA | same (37) | same-build/same-platform swap |
+| 100029 | bam         | NA12878.Hs38d1 | vcf         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | todo: buildminmatch chr.  | x
+| 100030 | bam         | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform swap |
+| 100031 | cram        | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform swap |
+| 100032 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | same-build/same-platform  |
 
 ## RNA -> RNA
 | TEST ID| InputType A | Sample A       | InputType B | Sample B       | Datatypes | Build mix | Testtype                  |
@@ -58,9 +58,9 @@
 | 100010 | vcf         | RNA-008.GRCh38 | vcf         | RNA-009.GRCh37 | RNA → RNA | 38 vs 37  | cross-build/same-platform |
 | 100011 | vcf         | RNA-008.GRCh38 | vcf         | RNA-009.GRCh38 | RNA → RNA | same (38) | same-build/same-platform  |
 | 100022 | vcf         | RNA-008.GRCh37 | bam         | RNA-008.GRCh37 | RNA → RNA | same (37) | same-build/same-platform  |
-| 100023 | vcf         | RNA-008.GRCh37 | cram        | RNA-009.GRCh38 | RNA → RNA | 37 vs 38  | todo.                     |
+| 100023 | vcf         | RNA-008.GRCh37 | cram        | RNA-009.GRCh38 | RNA → RNA | 37 vs 38  | todo.                     | x
 | 100024 | vcf         | RNA-009.GRCh38 | bam         | RNA-008.GRCh37 | RNA → RNA | 38 vs 37  | cross-build/same-platform |
-| 100025 | vcf         | RNA-009.GRCh38 | cram        | RNA-008.GRCh38 | RNA → RNA | same (38) | todo.                     |
+| 100025 | vcf         | RNA-009.GRCh38 | cram        | RNA-008.GRCh38 | RNA → RNA | same (38) | todo.                     | x
 
 ## DNA → OPAR
 | TEST ID| InputType A | Sample A       | InputType B | Sample B        | Datatypes  | Build mix | Testtype                   |
