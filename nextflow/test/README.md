@@ -50,7 +50,7 @@
 | 100031 | cram        | NA12878.GRCh38 | vcf         | DNA-005.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform swap |
 | 100032 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | same-build/same-platform  | 
 | 100039 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | todo: bug: name conflixt  | x
-| 100040 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | todo: bug: cram id not updated  | x
+| 100040 | cram        | NA12878.GRCh37 | vcf         | NA12878.GRCh37     | DNA → DNA | same (37) | todo: bug: vcf id not updated  | x
 
 ## RNA -> RNA
 | TEST ID| InputType A | Sample A       | InputType B | Sample B       | Datatypes | Build mix | Testtype                  |
@@ -71,6 +71,7 @@
 | 100013 | vcf         | DNA-005.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform swap |
 | 100033 | vcf         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
 | 100034 | vcf         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | cross-build/cross-platform |
+| 100026 | bam         | DNA-005.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform swap |
 | 100035 | bam         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform  |
 | 100036 | bam         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | same-build/cross-platform  |
 | 100037 | cram        | NA12878.GRCh37 | txt         | OPAR-002.GRCh37 | DNA → OPAR | same (37) | cross-build/cross-platform |
