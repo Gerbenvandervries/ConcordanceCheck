@@ -8,7 +8,7 @@
 #         BAM/CRAM: RNA-008, DNA-004.GRCh37 DNA-001.GRCh37
 #         OPAR:     OA001, OA002
 
-# Testcases:
+# Testcases: 
 
 ## DNA → RNA
 | TEST ID| InputType A | Sample A       | InputType B | Sample B       | Datatypes | Build mix | Testtype                   |
