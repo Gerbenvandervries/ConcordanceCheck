@@ -43,7 +43,7 @@
 | 100007 | vcf         | DNA-004.GRCh38 | vcf         | DNA-003.GRCh38     | DNA → DNA | same (38) | same-build/same-platform  |
 | 100018 | vcf         | DNA-003.GRCh37 | bam         | DNA-004.GRCh37     | DNA → DNA | same (37) | same-build/same-platform swap |
 | 100019 | vcf         | DNA-003.GRCh37 | cram        | NA24385.GRCh38     | DNA → DNA | 37 vs 38  | cross-build/same-platform |
-| 100020 | vcf         | DNA-004.GRCh38 | bam         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform sap|
+| 100020 | vcf         | DNA-004.GRCh38 | bam         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | cross-build/same-platform swap|
 | 100021 | vcf         | DNA-004.GRCh38 | cram        | NA24385.GRCh38     | DNA → DNA | same (38) | same-build/same-platform  |
 | 100028 | bam         | NA12878.GRCh37 | vcf         | DNA-005.GRCh37     | DNA → DNA | same (37) | same-build/same-platform swap |
 | 100029 | bam         | NA12878.Hs38d1 | vcf         | DNA-001.GRCh37     | DNA → DNA | 38 vs 37  | todo: buildminmatch chr.  |
