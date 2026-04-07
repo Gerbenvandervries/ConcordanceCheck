@@ -7,8 +7,8 @@ PULLREQUEST=$1
 ## functions
 #
 compare_results_dirs() {
-	truth_dir="$1"
-	compare_dir="$2"
+	truth_dir="${1}"
+	compare_dir="${2}"
 	error=0  # default: success
 
 	if [[ ! -d "${truth_dir}" || ! -d "${compare_dir}" ]]; then
@@ -34,7 +34,16 @@ compare_results_dirs() {
 			cut -f3-$(($(head -1 "${file2}" | awk -F'\t' '{print NF}') - 3)) "${file2}" > "${strippedf2}"
 			file1="${strippedf1}"
 			file2="${strippedf2}"
-    fi
+		fi
+		# Strip first column from each .variant file before comparing the results
+		if [[ "${file1}" == *".variants"* ]];then
+			strippedf1="${WORKDIR}/tmp/1.${filename}.stripped"
+			strippedf2="${WORKDIR}/tmp/2.${filename}.stripped"
+			cut -f2- "${file1}" > "${strippedf1}"
+			cut -f2- "${file2}" > "${strippedf2}"
+			file1="${strippedf1}"
+			file2="${strippedf2}"
+		fi
 
 		if diff -q "${file1}" "${file2}" > /dev/null; then
 			echo "${filename} is equal."
@@ -138,7 +147,7 @@ while [ "${all_done}" = false ]; do
 	done
 
 	if [ "${all_done}" = false ]; then
-		echo "Waiting 10 seconds before next check..."
+		echo "Waiting 15 seconds before next check..."
 		sleep 15
 		echo ""
 	fi
