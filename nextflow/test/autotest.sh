@@ -81,7 +81,6 @@ mkdir -p "${WORKDIR}/logs/${pipeline}"
 mkdir -p "${WORKDIR}/tmp"
 mkdir -p "${WORKDIR}/samplesheets/archive"
 
-#cd /tmp
 cd "${WORKDIR}"
 git clone "https://github.com/molgenis/${pipeline}.git"
 
@@ -90,8 +89,6 @@ cd "${pipeline}" || exit
 git fetch --tags --progress "https://github.com/molgenis/${pipeline}/" +refs/pull/*:refs/remotes/origin/pr/*
 COMMIT=$(git rev-parse refs/remotes/origin/pr/${PULLREQUEST}/merge^{commit})
 git checkout -f "${COMMIT}"
-#cd /tmp
-#mv "${pipeline}" "${WORKDIR}"
 cd "${WORKDIR}/${pipeline}"
 
 mv nextflow ../
