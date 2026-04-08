@@ -82,7 +82,10 @@
 ## PGX → OPAR
 | TEST ID| InputType A | Sample A       | InputType B | Sample B        | Datatypes  | Build mix | Testtype        |
 | ------ | ----------- | -------------- | ----------- | --------------- | ---------- | --------- | --------------- |
+|        | vcf         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | PGX → OPAR | 37 vs 37  | cross-build/cross-platform |
 
 ## ONT → OPAR
 | TEST ID| InputType A | Sample A       | InputType B | Sample B        | Datatypes  | Build mix | Testtype        |
 | ------ | ----------- | -------------- | ----------- | --------------- | ---------- | --------- | --------------- |
+|        | vcf         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | ONT → OPAR | 38 vs 37  | cross-build/cross-platform |
+|        | cram        | NA12878.GRCh38 | txt         | OPAR-002.GRCh37 | ONT → OPAR | 38 vs 37  | cross-build/cross-platform |
