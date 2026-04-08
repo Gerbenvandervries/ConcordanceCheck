@@ -72,7 +72,7 @@
 | 100013 | vcf         | DNA-005.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform swap |
 | 100033 | vcf         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
 | 100034 | vcf         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | cross-build/cross-platform |
-| 100026 | bam         | DNA-004.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform low treshhold |
+| 100026 | bam         | DNA-004.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform low threshold |
 | 100035 | bam         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) | same-build/cross-platform  |
 | 100036 | bam         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | same-build/cross-platform  |
 | 100027 | cram        | NA12878.GRCh38 | txt         | OPAR-002.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |

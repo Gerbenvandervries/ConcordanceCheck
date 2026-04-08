@@ -35,15 +35,6 @@ compare_results_dirs() {
 			file1="${strippedf1}"
 			file2="${strippedf2}"
 		fi
-		# Strip first column from each .variant file before comparing the results
-		if [[ "${file1}" == *".variants"* ]];then
-			strippedf1="${WORKDIR}/tmp/1.${filename}.stripped"
-			strippedf2="${WORKDIR}/tmp/2.${filename}.stripped"
-			cut -f2- "${file1}" > "${strippedf1}"
-			cut -f2- "${file2}" > "${strippedf2}"
-			file1="${strippedf1}"
-			file2="${strippedf2}"
-		fi
 
 		if diff -q "${file1}" "${file2}" > /dev/null; then
 			echo "${filename} is equal."
@@ -90,15 +81,17 @@ mkdir -p "${WORKDIR}/logs/${pipeline}"
 mkdir -p "${WORKDIR}/tmp"
 mkdir -p "${WORKDIR}/samplesheets/archive"
 
-cd /tmp
+#cd /tmp
+cd "${WORKDIR}"
 git clone "https://github.com/molgenis/${pipeline}.git"
 
 cd "${pipeline}" || exit
+
 git fetch --tags --progress "https://github.com/molgenis/${pipeline}/" +refs/pull/*:refs/remotes/origin/pr/*
 COMMIT=$(git rev-parse refs/remotes/origin/pr/${PULLREQUEST}/merge^{commit})
 git checkout -f "${COMMIT}"
-cd /tmp
-mv "${pipeline}" "${WORKDIR}"
+#cd /tmp
+#mv "${pipeline}" "${WORKDIR}"
 cd "${WORKDIR}/${pipeline}"
 
 mv nextflow ../
