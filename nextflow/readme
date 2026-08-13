@@ -1,5 +1,5 @@
 #
-module load Java/11-LTS 
+module load Java/11-LTS
 
 curl -s https://get.nextflow.io | bash
 
