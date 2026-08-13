@@ -122,14 +122,33 @@ perl -pi -e 's|\${ConcordanceCheckVersion}|ConcordanceCheck/betaAutotest|g' "${W
 job_ids=($(grep 'Submitted batch job' "${WORKDIR}/tmp/ConcordanceCheck.log" | awk '{print $4}'))
 echo "Monitoring ${#job_ids[@]} Slurm jobs..."
 
-# Loop until all jobs are done
+# Loop until all jobs are done, with a max runtime op 30min
 all_done=false
+max_runtime=1800
+start_time=$(date +%s)
+
 while [ "${all_done}" = false ]; do
-	all_done=true  # assume done unless we find one that's still running/pending
+	all_done=true
+
+	# Check timeout
+	now=$(date +%s)
+	runtime=$((now - start_time))
+	kill_jobs=false
+
+	if (( runtime >= max_runtime )); then
+        	echo "ERROR: Maximum wait time of 30 minutes reached."
+        	echo "Start cancelling jobs..."
+		kill_jobs=true
+	fi
 
 	for job_id in "${job_ids[@]}"; do
+		if [[ "${kill_jobs}" == 'true' ]]; then
+	                echo "scancel ${job_id}"
+			scancel "${job_id}" 2>/dev/null || true
+		fi
+		
 		# Get job state from sacct
-		state=$(sacct -j "$job_id" --format=State --noheader | head -n 1 | awk '{print $1}')
+		state=$(sacct -j "${job_id}" --format=State --noheader | head -n 1 | awk '{print $1}')
 
 		case "${state}" in
 			COMPLETED|FAILED|CANCELLED|TIMEOUT|NODE_FAIL)
@@ -140,7 +159,7 @@ while [ "${all_done}" = false ]; do
 					all_done=false
 				;;
 				*)
-					echo "Job ${job_id} is still active with state: $state"
+					echo "Job ${job_id} is still active with state: ${state}"
 					all_done=false
 				;;
 		esac
@@ -150,6 +169,9 @@ while [ "${all_done}" = false ]; do
 		echo "Waiting 15 seconds before next check..."
 		sleep 15
 		echo ""
+	elif [[ "${kill_jobs}" == "true" ]]; then
+		echo 'ERROR: autotest stopped'
+		exit 1
 	fi
 done
 
