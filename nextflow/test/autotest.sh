@@ -118,16 +118,18 @@ perl -pi -e "s|/groups/umcg-atd/tmp08|/groups/umcg-atd/${TMPDIR}/|g" "${WORKDIR}
 perl -pi -e "s|sleep 15|sleep ${SLEEP}|g" "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
 perl -pi -e 's|\${GROUP}-ateambot|umcg-molgenis|g' "${WORKDIR}"/ConcordanceCheck/etc/sharedConfig.cfg
 perl -pi -e 's|\${ConcordanceCheckVersion}|ConcordanceCheck/betaAutotest|g' "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
+
+# Set starttime, with a max runtime op 30min
+all_done=false
+max_runtime=1800
+start_time=$(date +%s)
+
+#submit tests
 "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh -g umcg-atd -w "${WORKDIR}" 2>&1 | tee -a "${WORKDIR}/tmp/ConcordanceCheck.log"
 
 ## wait until results files are there
 job_ids=($(grep 'Submitted batch job' "${WORKDIR}/tmp/ConcordanceCheck.log" | awk '{print $4}'))
 echo "Monitoring ${#job_ids[@]} Slurm jobs..."
-
-# Loop until all jobs are done, with a max runtime op 30min
-all_done=false
-max_runtime=1800
-start_time=$(date +%s)
 
 while [ "${all_done}" = false ]; do
 	all_done=true
