@@ -113,7 +113,7 @@ module load nextflow
 module load ${pipeline}/betaAutotest
 
 perl -pi -e "s|/groups/umcg-atd/tmp08|/groups/umcg-atd/${TMPDIR}/|g" "${WORKDIR}/samplesheets/"*.txt
-perl -pi -e 's|sleep 15|sleep 2|g' "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
+#perl -pi -e 's|sleep 15|sleep 20|g' "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
 perl -pi -e 's|\${GROUP}-ateambot|umcg-molgenis|g' "${WORKDIR}"/ConcordanceCheck/etc/sharedConfig.cfg
 perl -pi -e 's|\${ConcordanceCheckVersion}|ConcordanceCheck/betaAutotest|g' "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
 "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh -g umcg-atd -w "${WORKDIR}" 2>&1 | tee -a "${WORKDIR}/tmp/ConcordanceCheck.log"
@@ -136,33 +136,33 @@ while [ "${all_done}" = false ]; do
 	kill_jobs=false
 
 	if (( runtime >= max_runtime )); then
-        	echo "ERROR: Maximum wait time of 30 minutes reached."
-        	echo "Start cancelling jobs..."
-		kill_jobs=true
+			echo "ERROR: Maximum wait time of 30 minutes reached."
+			echo "Start cancelling jobs..."
+			kill_jobs=true
 	fi
 
 	for job_id in "${job_ids[@]}"; do
 		if [[ "${kill_jobs}" == 'true' ]]; then
-	                echo "scancel ${job_id}"
+			echo "scancel ${job_id}"
 			scancel "${job_id}" 2>/dev/null || true
-		fi
-		
-		# Get job state from sacct
-		state=$(sacct -j "${job_id}" --format=State --noheader | head -n 1 | awk '{print $1}')
+		else
+			# Get job state from sacct
+			state=$(sacct -j "${job_id}" --format=State --noheader | head -n 1 | awk '{print $1}')
 
-		case "${state}" in
-			COMPLETED|FAILED|CANCELLED|TIMEOUT|NODE_FAIL)
-			echo "Job ${job_id} finished with state: ${state}"
-				;;
-				"")
-					echo "Job ${job_id} not found yet (might still be starting up?)"
-					all_done=false
-				;;
-				*)
-					echo "Job ${job_id} is still active with state: ${state}"
-					all_done=false
-				;;
-		esac
+			case "${state}" in
+				COMPLETED|FAILED|CANCELLED|TIMEOUT|NODE_FAIL)
+				echo "Job ${job_id} finished with state: ${state}"
+					;;
+					"")
+						echo "Job ${job_id} not found yet (might still be starting up?)"
+						all_done=false
+					;;
+					*)
+						echo "Job ${job_id} is still active with state: ${state}"
+						all_done=false
+					;;
+			esac
+		fi
 	done
 
 	if [ "${all_done}" = false ]; then
