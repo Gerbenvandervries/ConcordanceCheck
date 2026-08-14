@@ -63,9 +63,11 @@ host=$(hostname -s)
 if [[ "${host}" == "talos" ]]
 then
 	TMPDIR="tmp08"
+	SLEEP=5
 elif [[ "${host}" == "hyperchicken" ]]
 then
 	TMPDIR="tmp09"
+	SLEEP=20
 else
 	echo "No valid host to run Jenkins."
 fi
@@ -113,7 +115,7 @@ module load nextflow
 module load ${pipeline}/betaAutotest
 
 perl -pi -e "s|/groups/umcg-atd/tmp08|/groups/umcg-atd/${TMPDIR}/|g" "${WORKDIR}/samplesheets/"*.txt
-#perl -pi -e 's|sleep 15|sleep 20|g' "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
+perl -pi -e "s|sleep 15|sleep ${SLEEP}|g" "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
 perl -pi -e 's|\${GROUP}-ateambot|umcg-molgenis|g' "${WORKDIR}"/ConcordanceCheck/etc/sharedConfig.cfg
 perl -pi -e 's|\${ConcordanceCheckVersion}|ConcordanceCheck/betaAutotest|g' "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh
 "${WORKDIR}"/ConcordanceCheck/bin/ConcordanceCheck.sh -g umcg-atd -w "${WORKDIR}" 2>&1 | tee -a "${WORKDIR}/tmp/ConcordanceCheck.log"
