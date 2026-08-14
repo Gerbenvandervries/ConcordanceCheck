@@ -67,7 +67,7 @@ then
 elif [[ "${host}" == "hyperchicken" ]]
 then
 	TMPDIR="tmp09"
-	SLEEP=30
+	SLEEP=1
 else
 	echo "No valid host to run Jenkins."
 fi
@@ -121,7 +121,8 @@ perl -pi -e 's|\${ConcordanceCheckVersion}|ConcordanceCheck/betaAutotest|g' "${W
 
 # Set starttime, with a max runtime op 30min
 all_done=false
-max_runtime=1800
+#max_runtime=1800
+max_runtime=300
 start_time=$(date +%s)
 
 #submit tests
