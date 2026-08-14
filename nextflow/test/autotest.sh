@@ -67,7 +67,7 @@ then
 elif [[ "${host}" == "hyperchicken" ]]
 then
 	TMPDIR="tmp09"
-	SLEEP=20
+	SLEEP=30
 else
 	echo "No valid host to run Jenkins."
 fi
@@ -168,7 +168,7 @@ while [ "${all_done}" = false ]; do
 	done
 
 	if [ "${all_done}" = false ]; then
-		echo "Waiting 15 seconds before next check..."
+		echo "Runtime: ${runtime} < max_time: ${max_runtime}, Waiting 15 seconds before next check..."
 		sleep 15
 		echo ""
 	elif [[ "${kill_jobs}" == "true" ]]; then
