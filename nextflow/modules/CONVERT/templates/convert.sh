@@ -31,5 +31,5 @@ set -eu
     if [[ "${total_snps}" -eq "${invalid_snp_count}" ]]
     then
         echo "ERROR: No SNPs have an ALT value. Openarray convertion failed!"
-        exit 
+        exit 1
     fi
