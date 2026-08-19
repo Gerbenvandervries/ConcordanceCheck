@@ -279,13 +279,13 @@ fi
 			}
 		}
 	' "${concordanceDir}/results/${concordanceCheckId}.sample"
-	} > ${JOB_CONTROLE_FILE_BASE}.warn"
+	} > "${JOB_CONTROLE_FILE_BASE}.warn"
 
 	if [[ ! -s "${JOB_CONTROLE_FILE_BASE}.warn" ]]
 	then
 		rm -f "${JOB_CONTROLE_FILE_BASE}.warn"
 	else
-		log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" '0' "identicalCall is Empty or NaN for ${concordanceCheckId}.sample. See: ${JOB_CONTROLE_FILE_BASE}.warn"
+		log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" "0" "IdenticalCall is Empty or NaN for ${concordanceCheckId}.sample. See: ${JOB_CONTROLE_FILE_BASE}.warn"
 	fi
 
 
