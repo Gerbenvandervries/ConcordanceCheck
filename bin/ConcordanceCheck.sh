@@ -286,7 +286,7 @@ fi
 		rm -f "${JOB_CONTROLE_FILE_BASE}.warn"
 	else
 		echo 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" '0' \
-		"identicalCall is 'Empty' or 'NaN' for ${concordanceCheckId}.sample. See ${file}.warn"
+		"identicalCall is 'Empty' or 'NaN' for ${concordanceCheckId}.sample. See ${JOB_CONTROLE_FILE_BASE}.warn"
 	fi
 
 
