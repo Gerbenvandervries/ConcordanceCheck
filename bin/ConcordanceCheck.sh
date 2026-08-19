@@ -263,7 +263,7 @@ fi
 	## Create warning log for empty or 'NaN' .sample outputs
 	#
 	awk -F'\t' -v col=3 '
-	NR > 1 && $col == "NaN" {
+	NR > 1 && \$col == "NaN" {
 		found_nan = 1	
 	}
 
