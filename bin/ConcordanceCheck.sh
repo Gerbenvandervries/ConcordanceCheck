@@ -259,6 +259,36 @@ fi
 			mv -v "${JOB_CONTROLE_FILE_BASE}."{started,failed}
 			exit 1
 			}
+	#
+	## Create warning log for empty or 'NaN' .sample outputs
+	#
+	{
+	awk -F'\t' '
+		NR > 1 && $3 == "NaN" {
+			print "WARNING: identicalCall is 'NaN' for ConcordanceCheck: ${concordanceCheckId}."
+			found_nan = 1
+		}
+
+		END {
+			if (NR < 2) {
+				print "WARNING: .sample file contains only the header for ConcordanceCheck: ${concordanceCheckId}."
+			}
+
+			if (found_nan) {
+				print "WARNING: identicalCall is 'NaN' for ConcordanceCheck: ${concordanceCheckId}."
+			}
+		}
+	' "${concordanceDir}/results/${concordanceCheckId}.sample"
+	} > ${JOB_CONTROLE_FILE_BASE}.warn"
+
+	if [[ ! -s ${JOB_CONTROLE_FILE_BASE}.warn" ]]
+	then
+		rm -f "${JOB_CONTROLE_FILE_BASE}.warn"
+	else
+		echo 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" '0' \
+		"identicalCall is 'Empty' or 'NaN' for ${concordanceCheckId}.sample. See ${file}.warn"
+	fi
+
 
 	# Adding concordance pipeline version into .sample file.
 	awk -v c="${concordanceCheckVersion}" '{if (NR>1){print \$0"\t"c}else {print \$0"\tConcordanceCheckVersion"}}' "${concordanceDir}/results/${concordanceCheckId}.sample" > "${concordanceDir}/results/${concordanceCheckId}.sample.tmp"
