@@ -79,7 +79,7 @@
 | 100037 | cram        | NA12878.GRCh37 | txt         | OPAR-002.GRCh37 | DNA → OPAR | same (37) | cross-build/cross-platform |
 | 100038 | cram        | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37  | cross-build/cross-platform |
 | 100041 | vcf         | NA12878.GRCh37 | txt         | OPAR-001.GRCh37 | DNA → OPAR | same (37) |Failed opar run/empty call col. |
-
+| 100042 | vcf         | NA12878.GRCh38 | txt         | OPAR-001.GRCh37 | DNA → OPAR | 38 vs 37 |Failed opar run/empty call col. |
 
 ## PGX → OPAR
 | TEST ID| InputType A | Sample A       | InputType B | Sample B        | Datatypes  | Build mix | Testtype        |
