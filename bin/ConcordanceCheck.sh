@@ -255,7 +255,7 @@ fi
 	-resume \\
 	|| {
 			log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" "0" "Concordance pipeline crashed. Check ${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out"
-			tail -50 "${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out" >> "${JOB_CONTROLE_FILE_BASE}.started"
+			tail -15 "${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out" >> "${JOB_CONTROLE_FILE_BASE}.started"
 			mv -v "${JOB_CONTROLE_FILE_BASE}."{started,failed}
 			exit 1
 			}
@@ -270,10 +270,12 @@ fi
 	END {
 		if (NR < 2) {
 			print "WARNING: .sample file contains only the header for ConcordanceCheck: ${concordanceCheckId}"
+			print "WARNING: ConcordanceCheck failed!"
 		}
 
 		if (found_nan) {
 			print "WARNING: identicalCall is NaN for ConcordanceCheck: ${concordanceCheckId}"
+			print "WARNING: ConcordanceCheck failed!"
 		}
 	}
 	' "${concordanceDir}/results/${concordanceCheckId}.sample" \
