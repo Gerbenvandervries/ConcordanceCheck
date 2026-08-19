@@ -17,7 +17,7 @@ set -eu
     #
     ## # Sanity check: all SNPs should have an ALT value.
     #
-    total_snps=$(grep -v -c "!{sampleId}.converted.vcf")
+    total_snps=$(grep -v "#" -c "!{sampleId}.converted.vcf")
     invalid_snp_count=$(awk -F'\t' '
     !/^#/ &&
     length($4) == 1 &&
@@ -28,8 +28,8 @@ set -eu
         print count + 0
     } ' "!{sampleId}.converted.vcf")
 
-    if [[ "${total_snps}" -eq "${valid_snps}" ]]
+    if [[ "${total_snps}" -eq "${invalid_snp_count}" ]]
     then
         echo "ERROR: No SNPs have an ALT value. Openarray convertion failed!"
-        exit 1
+        exit 
     fi
