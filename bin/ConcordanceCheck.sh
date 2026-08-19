@@ -262,24 +262,22 @@ fi
 	#
 	## Create warning log for empty or 'NaN' .sample outputs
 	#
-	{
 	awk -F'\t' '
-		NR > 1 && $3 == "NaN" {
-			print "WARNING: identicalCall is 'NaN' for ConcordanceCheck: ${concordanceCheckId}."
-			found_nan = 1
+	NR > 1 && $3 == "NaN" {
+		found_nan = 1	
+	}
+
+	END {
+		if (NR < 2) {
+			print "WARNING: .sample file contains only the header for ConcordanceCheck: ${concordanceCheckId}"
 		}
 
-		END {
-			if (NR < 2) {
-				print "WARNING: .sample file contains only the header for ConcordanceCheck: ${concordanceCheckId}."
-			}
-
-			if (found_nan) {
-				print "WARNING: identicalCall is 'NaN' for ConcordanceCheck: ${concordanceCheckId}."
-			}
+		if (found_nan) {
+			print "WARNING: identicalCall is NaN for ConcordanceCheck: ${concordanceCheckId}"
 		}
-	' "${concordanceDir}/results/${concordanceCheckId}.sample"
-	} > "${JOB_CONTROLE_FILE_BASE}.warn"
+	}
+	' "${concordanceDir}/results/${concordanceCheckId}.sample" \
+	> "${JOB_CONTROLE_FILE_BASE}.warn"
 
 	if [[ ! -s "${JOB_CONTROLE_FILE_BASE}.warn" ]]
 	then

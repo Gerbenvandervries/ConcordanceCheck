@@ -121,8 +121,7 @@ perl -pi -e 's|\${ConcordanceCheckVersion}|ConcordanceCheck/betaAutotest|g' "${W
 
 # Set starttime, with a max runtime op 30min
 all_done=false
-#max_runtime=1800
-max_runtime=300
+max_runtime=1800
 start_time=$(date +%s)
 
 #submit tests
