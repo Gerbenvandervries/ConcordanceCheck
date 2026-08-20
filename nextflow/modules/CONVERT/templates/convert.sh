@@ -30,9 +30,11 @@ set -eu
 
     if [[ "${total_snps}" -eq "${invalid_snp_count}" ]]
     then
-        echo    
-        echo "ERROR: 'Call' column is empty in openarray file. No SNPs have any ALT value."
+        {
+        echo   
+        echo "ERROR: The 'Call' column is empty in the OpenArray file for sample !{sampleId}. No SNPs have a valid ALT value."
         echo "ERROR: Concordance check failed!"
         echo
+        } >&2
         exit 1
     fi
