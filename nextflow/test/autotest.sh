@@ -67,7 +67,7 @@ then
 elif [[ "${host}" == "hyperchicken" ]]
 then
 	TMPDIR="tmp09"
-	SLEEP=1
+	SLEEP=25
 else
 	echo "No valid host to run Jenkins."
 fi
