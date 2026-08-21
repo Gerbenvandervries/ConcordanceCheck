@@ -215,6 +215,6 @@ done
 echo "All jobs have finished."
 
 #check output content in trueSet and results dir.
-compare_results_dirs "${WORKDIR}/nextflow/test/trueSet/" "${WORKDIR}/results/" "${WORKDIR}/logs/${pipeline}"
+compare_results_dirs "${WORKDIR}/nextflow/test/trueSet/" "${WORKDIR}/results/" "${TMPDIRECTORY}/logs/concordance"
 
 exit 0
