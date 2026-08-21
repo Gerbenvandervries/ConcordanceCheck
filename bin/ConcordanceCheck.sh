@@ -283,6 +283,7 @@ fi
 
 	if [[ ! -s "${JOB_CONTROLE_FILE_BASE}.warn" ]]
 	then
+		log4Bash 'DEBUG' "${LINENO}" "${FUNCNAME[0]:-main}" "0" ".sample file OK."
 		rm -f "${JOB_CONTROLE_FILE_BASE}.warn"
 	else
 		log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" "0" "IdenticalCall is Empty or NaN for ${concordanceCheckId}.sample. See: ${JOB_CONTROLE_FILE_BASE}.warn"
