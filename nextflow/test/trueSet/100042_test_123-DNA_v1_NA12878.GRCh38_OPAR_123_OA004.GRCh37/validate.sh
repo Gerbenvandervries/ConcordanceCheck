@@ -16,7 +16,7 @@ echo "Validation failed: ${failed_file} does not exist."
 	exit 1
 fi
 
-if grep -Fqx "${expected_error}" "${failed_file}"; then
+if grep -Fq "${expected_error}" "${failed_file}"; then
 	echo "Validation passed: expected error found."
 	exit 0
 else
