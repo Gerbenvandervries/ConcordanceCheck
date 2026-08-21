@@ -9,48 +9,81 @@ PULLREQUEST=$1
 compare_results_dirs() {
 	truth_dir="${1}"
 	compare_dir="${2}"
-	error=0  # default: success
+	logs_dir="${3}"
+	error=0
 
 	if [[ ! -d "${truth_dir}" || ! -d "${compare_dir}" ]]; then
 		echo "One or both directories do not exist."
 		return 1
 	fi
 
-	for file1 in "${truth_dir}"/*.{sample,variants}; do
-		filename=$(basename "${file1}")
-		file2="${compare_dir}/${filename}"
+	for truth_set_dir in "${truth_dir}"/*/; do
+		[[ -d "${truth_set_dir}" ]] || continue
 
-		if [ ! -f "${file2}" ]; then
-			echo "File ${filename} not found in ${compare_dir}"
-			error=1
-			continue
-		fi
+		truth_set=$(basename "${truth_set_dir}")
 
-		# Strip first last column from each .sample file before comparing the results
-		if [[ "${file1}" == *".sample"* ]];then
-			strippedf1="${WORKDIR}/tmp/1.${filename}.stripped"
-			strippedf2="${WORKDIR}/tmp/2.${filename}.stripped"
-			cut -f3-$(($(head -1 "${file1}" | awk -F'\t' '{print NF}') - 3)) "${file1}" > "${strippedf1}"
-			cut -f3-$(($(head -1 "${file2}" | awk -F'\t' '{print NF}') - 3)) "${file2}" > "${strippedf2}"
-			file1="${strippedf1}"
-			file2="${strippedf2}"
-		fi
+		echo "Checking truth set: ${truth_set}"
 
-		if diff -q "${file1}" "${file2}" > /dev/null; then
-			echo "${filename} is equal."
-		else
-			echo "${filename} differs."
-			error=1
+		# Compare .sample and .variants files, if present
+		for file1 in "${truth_set_dir}"/*.{sample,variants}; do
+			[[ -f "${file1}" ]] || continue
+
+			filename=$(basename "${file1}")
+			file2="${compare_dir}/${filename}"
+
+			if [[ ! -f "${file2}" ]]; then
+				echo "File ${filename} not found in ${compare_dir}"
+				error=1
+				continue
+			fi
+
+			# Strip columns from .sample files before comparing
+			if [[ "${file1}" == *.sample ]]; then
+				strippedf1="${WORKDIR}/tmp/1.${filename}.stripped"
+				strippedf2="${WORKDIR}/tmp/2.${filename}.stripped"
+
+				cut -f3-$(($(head -1 "${file1}" | awk -F'\t' '{print NF}') - 3)) \
+					"${file1}" > "${strippedf1}"
+
+				cut -f3-$(($(head -1 "${file2}" | awk -F'\t' '{print NF}') - 3)) \
+					"${file2}" > "${strippedf2}"
+
+				file1="${strippedf1}"
+				file2="${strippedf2}"
+			fi
+
+			if diff -q "${file1}" "${file2}" > /dev/null; then
+				echo "${filename} is equal."
+			else
+				echo "${filename} differs."
+				error=1
+			fi
+		done
+
+		# Run optional validate.sh
+		if [[ -f "${truth_set_dir}/validate.sh" ]]; then
+			echo "Running additional validation for ${truth_set}..."
+
+			if bash "${truth_set_dir}/validate.sh" \
+				"${truth_set_dir}" \
+				"${compare_dir}" \
+				"${logs_dir}"; then
+				echo "${truth_set}: Validation passed."
+			else
+				echo "${truth_set}: Validation failed."
+				error=1
+			fi
 		fi
 	done
 
-if [ "${error}" -ne 0 ]; then
-	echo "Test failed!!"
+	if [ "${error}" -ne 0 ]; then
+		echo "Test failed!!"
+		return "${error}"
+	else
+		echo "Test succeeded!!"
+		return "${error}"
+	fi
 	return "${error}"
-else
-	echo "Test succeeded!!"
-	return "${error}"
-fi
 }
 
 #
@@ -182,6 +215,6 @@ done
 echo "All jobs have finished."
 
 #check output content in trueSet and results dir.
-compare_results_dirs "${WORKDIR}/nextflow/test/trueSet/"  "${WORKDIR}/results/"
+compare_results_dirs "${WORKDIR}/nextflow/test/trueSet/" "${WORKDIR}/results/" "${WORKDIR}/logs/${pipeline}"
 
 exit 0
