@@ -103,6 +103,7 @@ then
 	SLEEP=15
 else
 	echo "No valid host to run Jenkins."
+	exit 1
 fi
 
 TMPDIRECTORY="/groups/umcg-atd/${TMPDIR}"
