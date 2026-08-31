@@ -254,11 +254,41 @@ fi
 	-profile slurm \\
 	-resume \\
 	|| {
-			log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" "0" " Concordance pipeline crashed. Check ${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out"
-			tail -50 "${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out" >> "${JOB_CONTROLE_FILE_BASE}.started"
+			log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" "0" "Concordance pipeline crashed. Check ${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out"
+			tail -15 "${concordanceDir}/jobs/${concordanceCheckId}/${concordanceCheckId}.out" >> "${JOB_CONTROLE_FILE_BASE}.started"
 			mv -v "${JOB_CONTROLE_FILE_BASE}."{started,failed}
 			exit 1
 			}
+	#
+	## Create warning log for empty or 'NaN' .sample outputs
+	#
+	awk -F'\t' -v col=3 '
+	NR > 1 && \$col == "NaN" {
+		found_nan = 1	
+	}
+
+	END {
+		if (NR < 2) {
+			print "WARNING: .sample file contains only the header for ConcordanceCheck: ${concordanceCheckId}"
+			print "WARNING: ConcordanceCheck failed!"
+		}
+
+		if (found_nan) {
+			print "WARNING: identicalCall is NaN for ConcordanceCheck: ${concordanceCheckId}"
+			print "WARNING: ConcordanceCheck failed!"
+		}
+	}
+	' "${concordanceDir}/results/${concordanceCheckId}.sample" \
+	> "${JOB_CONTROLE_FILE_BASE}.warn"
+
+	if [[ ! -s "${JOB_CONTROLE_FILE_BASE}.warn" ]]
+	then
+		log4Bash 'DEBUG' "${LINENO}" "${FUNCNAME[0]:-main}" "0" ".sample file OK."
+		rm -f "${JOB_CONTROLE_FILE_BASE}.warn"
+	else
+		log4Bash 'WARN' "${LINENO}" "${FUNCNAME[0]:-main}" "0" "IdenticalCall is Empty or NaN for ${concordanceCheckId}.sample. See: ${JOB_CONTROLE_FILE_BASE}.warn"
+	fi
+
 
 	# Adding concordance pipeline version into .sample file.
 	awk -v c="${concordanceCheckVersion}" '{if (NR>1){print \$0"\t"c}else {print \$0"\tConcordanceCheckVersion"}}' "${concordanceDir}/results/${concordanceCheckId}.sample" > "${concordanceDir}/results/${concordanceCheckId}.sample.tmp"
